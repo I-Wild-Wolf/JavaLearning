@@ -5,7 +5,7 @@ public class Multi2 extends Applet {
     Thread thrColor = null;
     Thread thrSize = null;
     int rColor, gColor, bColor;
-    int nFontSize = 12;
+    int size = 12;
 
     public void start() {
         if (thrColor == null) {
@@ -30,11 +30,10 @@ public class Multi2 extends Applet {
     }
 
     public void paint(Graphics g) {
-        String s;
+
         g.setColor(new Color(rColor, gColor, bColor));
-        s = "(R, G, B) = (" + rColor + ", " + gColor + ", " + bColor + ")";
-        g.setFont(new Font("Courier", Font.PLAIN, nFontSize));
-        g.drawString(s, 10, 30);
+        g.drawRect(((int) (600 * Math.random())), ((int) (800 * Math.random())), size * 2, size);
+        g.drawOval(((int) (600 * Math.random())), ((int) (800 * Math.random())), size, size);
     }
 
     public String getAppletInfo() {
@@ -55,11 +54,11 @@ class ColorThread extends Thread {
             a.gColor = (int) (255 * Math.random());
             a.bColor = (int) (255 * Math.random());
 
-            a.repaint();
+
             try
 
             {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (
                     InterruptedException ie)
 
@@ -83,16 +82,16 @@ class SizeThread extends Thread {
 
         {
             if (incr) {
-                if (a.nFontSize < 30) a.nFontSize++;
+                if (a.size < 200) a.size++;
                 else incr = false;
             } else {
-                if (a.nFontSize > 12) a.nFontSize--;
+                if (a.size > 75) a.size--;
                 else incr = true;
             }
 
             a.repaint();
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException ie) {
                 stop();
             }
