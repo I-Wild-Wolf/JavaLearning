@@ -1,45 +1,33 @@
+import java.awt.Graphics;
+import java.util.*;
+import java.text.DateFormat;
 import java.applet.Applet;
-import java.awt.*;
+public class Clock extends Applet implements Runnable {
+        private Thread clockThread = null;
+        public void start()
+if (clockThread == null)
+        clockThread = new Thread(this, "Clock"); l
+        clockThread.start();
 
-public class Multi2 extends Applet {
-    Thread thrColor = null;
-    Thread thrSize = null;
-    int rColor, gColor, bColor;
-    int size = 12;
+public void run()(
+        Thread myThread = Thread.currentThread():
+        while (clockThread == myThread){
+        repainti}:
+        try
+        Thread.sleep(1000);
+        catch (lnterruptedException e){
 
-    public void start() {
-        if (thrColor == null) {
-            thrColor = new SizeThread(this);
-            thrColor.start();
-        }
-        if (thrSize == null) {
-            thrSize = new ColorThread(this);
-            thrSize.start();
-        }
-    }
+public void paint(Graphics g){
+        I! get the time and convert it to a date
+        Calendar cal = Calendar.getlnstance();
+        Date date = calgetTimeO;
+        II format it and display it
+        DateFormat dateFormatter = DateFormat.getTimeInstance();
+        g.drawString(dateFormatter.format(date), 5, 10);
 
-    public void stop() {
-        if (thrColor != null) {
-            thrColor.stop();
-            thrColor = null;
-        }
-        if (thrSize != null) {
-            thrSize.stop();
-            thrSize = null;
-        }
-    }
-
-    public void paint(Graphics g) {
-
-        g.setColor(new Color(rColor, gColor, bColor));
-        g.drawRect(((int) (600 * Math.random())), ((int) (800 * Math.random())), size * 2, size);
-        g.drawOval(((int) (600 * Math.random())), ((int) (800 * Math.random())), size, size);
-    }
-
-    public String getAppletInfo() {
-        return "Name: Multi2";
-    }
-}
+        II overrides Applet's stop method, not Thread's
+public void stop()
+        clockThread = null;
 
 class ColorThread extends Thread {
     Multi2 a = null;
