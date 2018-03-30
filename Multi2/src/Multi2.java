@@ -1,88 +1,133 @@
-import java.awt.Graphics;
-import java.util.*;
-import java.text.DateFormat;
+
 import java.applet.Applet;
-public class Clock extends Applet implements Runnable {
-        private Thread clockThread = null;
-        public void start()
-if (clockThread == null)
-        clockThread = new Thread(this, "Clock"); l
-        clockThread.start();
+import java.awt.*;
 
-public void run()(
-        Thread myThread = Thread.currentThread():
-        while (clockThread == myThread){
-        repainti}:
-        try
-        Thread.sleep(1000);
-        catch (lnterruptedException e){
+public class Multi2 extends Applet {
+  Thread thrColor = null;
+  Thread thrSize = null;
+  int rColor, gColor, bColor;
+  int nFontSize = 12;
 
-public void paint(Graphics g){
-        I! get the time and convert it to a date
-        Calendar cal = Calendar.getlnstance();
-        Date date = calgetTimeO;
-        II format it and display it
-        DateFormat dateFormatter = DateFormat.getTimeInstance();
-        g.drawString(dateFormatter.format(date), 5, 10);
-
-        II overrides Applet's stop method, not Thread's
-public void stop()
-        clockThread = null;
-
-class ColorThread extends Thread {
-    Multi2 a = null;
-
-    public ColorThread(Applet appl) {
-        a = (Multi2) appl;
+  // ============================================
+// start
+// ============================================
+  public void start() {
+    if (thrColor == null) {
+      thrColor = new SizeThread(this);
+      thrColor.start();
     }
 
-    public void run() {
-        while (true) {
-            a.rColor = (int) (255 * Math.random());
-            a.gColor = (int) (255 * Math.random());
-            a.bColor = (int) (255 * Math.random());
-
-
-            try
-
-            {
-                Thread.sleep(100);
-            } catch (
-                    InterruptedException ie)
-
-            {
-                stop();
-            }
-        }
+    if (thrSize == null) {
+      thrSize = new ColorThread(this);
+      thrSize.start();
     }
+  }
+
+  // ============================================
+// stop
+// ============================================
+  public void stop() {
+    if (thrColor != null) {
+      thrColor.stop();
+      thrColor = null;
+    }
+
+    if (thrSize != null) {
+      thrSize.stop();
+      thrSize = null;
+    }
+  }
+
+  // ============================================
+// paint
+// ============================================
+  public void paint(Graphics g) {
+    String s;
+    g.setColor(
+            new Color(rColor, gColor, bColor));
+
+    s = "(R, G, B) = (" + rColor + ", " +
+            gColor + ", " + bColor + ")";
+
+    g.setFont(new Font("Courier",
+            Font.PLAIN, nFontSize));
+
+    g.drawString(s, 10, 30);
+    g.drawRect(500, 120, nFontSize, nFontSize);
+    g.drawOval(100, 100, nFontSize, nFontSize);
+  }
+
+  // ============================================
+// getAppletInfo
+// ============================================
+  public String getAppletInfo() {
+    return "Name: Multi2";
+  }
 }
 
+// ============================================
+// Class ColorThread
+// ============================================
+class ColorThread extends Thread {
+  Multi2 a = null;
+
+  public ColorThread(Applet appl) {
+    a = (Multi2) appl;
+  }
+
+  // ============================================
+// run
+// ============================================
+  public void run() {
+    while (true) {
+      a.rColor = (int) (255 * Math.random());
+      a.gColor = (int) (255 * Math.random());
+      a.bColor = (int) (255 * Math.random());
+      a.repaint();
+
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException ie) {
+        stop();
+      }
+    }
+  }
+}
+
+// ============================================
+// Class SizeThread
+// ============================================
 class SizeThread extends Thread {
-    Multi2 a = null;
+  Multi2 a = null;
 
-    public SizeThread(Applet appl) {
-        a = (Multi2) appl;
+  public SizeThread(Applet appl) {
+    a = (Multi2) appl;
+  }
+
+  // ============================================
+// run
+// ============================================
+  public void run() {
+    boolean incr = true;
+    while (true) {
+      if (incr) {
+        if (a.nFontSize < 30)
+          a.nFontSize++;
+        else
+          incr = false;
+      } else {
+        if (a.nFontSize > 12)
+          a.nFontSize--;
+        else
+          incr = true;
+      }
+      a.repaint();
+
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException ie) {
+        stop();
+      }
     }
-
-    public void run() {
-        boolean incr = true;
-        while (true)
-
-        {
-            if (incr) {
-                if (a.size < 200) a.size++;
-                else incr = false;
-            } else {
-                if (a.size > 75) a.size--;
-                else incr = true;
-            }
-
-            a.repaint();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ie) {
-                stop();
-            }
-        }
-    }
+  }
 }
