@@ -29,7 +29,6 @@ public class RedColor implements Runnable {
         TimeUnit.MILLISECONDS.sleep(50);
       } catch (Exception ex) {
       }
-      System.out.println(tempColor + " : " + redColor);
     }
   }
 }

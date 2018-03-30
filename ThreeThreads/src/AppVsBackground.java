@@ -28,7 +28,7 @@ public class AppVsBackground extends Applet implements Runnable {
       while (true) {
         setBackground(new Color(redColor.getRedColor(), greenColor.getGreenColor(), blueColor.getBlueColor()));
         repaint();
-        tBlue.sleep(40);
+        tBlue.sleep(10);
       }
     } catch (Exception ex) {
       System.out.println(ex.toString());
