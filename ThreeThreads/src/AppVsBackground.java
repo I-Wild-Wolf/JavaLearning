@@ -2,9 +2,11 @@ import java.applet.Applet;
 import java.awt.*;
 
 public class AppVsBackground extends Applet implements Runnable {
-
+  public static boolean isStoped = false;
   public static int fps = 120;
   Thread app = new Thread(this);
+
+  Thread input = new Thread(new UInput());
 
   /*RedColor redColor = new RedColor(0);
   GreenColor greenColor = new GreenColor(15);
@@ -18,22 +20,28 @@ public class AppVsBackground extends Applet implements Runnable {
   Thread tGreen = new Thread(greenColor);
   Thread tBlue = new Thread(blueColor);
 
+
+
   @Override
   public void init() {
     setBackground(new Color(redColor.getColor(), greenColor.getColor(), blueColor.getColor()));
     app.start();
   }
 
+
   @Override
   public void run () {
     tRed.start();
     tGreen.start();
     tBlue.start();
+    input.start();
     try {
-      while (true) {
+      while (!Thread.currentThread().isInterrupted()) {
         setBackground(new Color(redColor.getColor(), greenColor.getColor(), blueColor.getColor()));
         repaint();
-        tBlue.sleep(fps - 30);
+        app.sleep(fps - 30);
+
+        if (isStoped) app.interrupt();
       }
     } catch (Exception ex) {
       System.out.println(ex.toString());
