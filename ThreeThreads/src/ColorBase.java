@@ -1,22 +1,24 @@
 import java.util.concurrent.TimeUnit;
 
-public class GreenColor implements Runnable {
+public class ColorBase implements Runnable {
   private int modFps;
-  private int greenColor = 50;
+  private int color = (int) (Math.random() * 255);
 
-  public GreenColor(int modFps) {
+  public ColorBase (int modFps) {
+
     this.modFps = modFps;
   }
 
-  public int getGreenColor() {
-    return greenColor;
+  public int getColor() {
+    return color;
   }
 
   @Override
   public void run() {
+    System.out.println(color);
     byte step = 1;
     while (true) {
-      int tempColor = greenColor + step;
+      int tempColor = color + step;
       if (tempColor > 255) {
         tempColor = 255;
         step *= -1;
@@ -25,13 +27,12 @@ public class GreenColor implements Runnable {
         tempColor = 0;
         step *= -1;
       }
-      greenColor = tempColor;
+      color = tempColor;
       try {
         TimeUnit.MILLISECONDS.sleep(AppVsBackground.fps - modFps);
       } catch (Exception ex) {
       }
     }
   }
+
 }
-
-

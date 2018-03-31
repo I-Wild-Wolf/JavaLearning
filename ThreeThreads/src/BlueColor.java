@@ -1,11 +1,11 @@
 import java.util.concurrent.TimeUnit;
 
 public class BlueColor implements Runnable {
-  private int rateOfChanging;
-  private int blueColor = 0;
+  private int modFps;
+  private int blueColor = 150;
 
-  public BlueColor(int rateOfChanging) {
-    this.rateOfChanging = rateOfChanging;
+  public BlueColor(int modFps) {
+    this.modFps = modFps;
   }
 
   public int getBlueColor() {
@@ -14,19 +14,20 @@ public class BlueColor implements Runnable {
 
   @Override
   public void run() {
+      byte step = 1;
     while (true) {
-      int tempColor = blueColor + rateOfChanging;
-      if (blueColor > 245) {
-        tempColor = 245;
-        rateOfChanging *= -1;
+      int tempColor = blueColor + step;
+      if (tempColor > 255) {
+        tempColor = 255;
+        step *= -1;
       }
-      if (blueColor < 10) {
-        tempColor = 10;
-        rateOfChanging *= -1;
+      if (tempColor < 0) {
+        tempColor = 0;
+        step *= -1;
       }
       blueColor = tempColor;
       try {
-        TimeUnit.MILLISECONDS.sleep(50);
+        TimeUnit.MILLISECONDS.sleep(AppVsBackground.fps - modFps);
       } catch (Exception ex) {
       }
     }

@@ -3,11 +3,16 @@ import java.awt.*;
 
 public class AppVsBackground extends Applet implements Runnable {
 
+  public static int fps = 120;
   Thread app = new Thread(this);
 
-  RedColor redColor = new RedColor(8);
-  GreenColor greenColor = new GreenColor(6);
-  BlueColor blueColor = new BlueColor(2);
+  /*RedColor redColor = new RedColor(0);
+  GreenColor greenColor = new GreenColor(15);
+  BlueColor blueColor = new BlueColor(30);*/
+
+  ColorBase redColor = new ColorBase(30);
+  ColorBase greenColor = new ColorBase(15);
+  ColorBase blueColor = new ColorBase(0);
 
   Thread tRed = new Thread(redColor);
   Thread tGreen = new Thread(greenColor);
@@ -15,8 +20,8 @@ public class AppVsBackground extends Applet implements Runnable {
 
   @Override
   public void init() {
+    setBackground(new Color(redColor.getColor(), greenColor.getColor(), blueColor.getColor()));
     app.start();
-    setBackground(new Color(redColor.getRedColor(), greenColor.getGreenColor(), blueColor.getBlueColor()));
   }
 
   @Override
@@ -26,9 +31,9 @@ public class AppVsBackground extends Applet implements Runnable {
     tBlue.start();
     try {
       while (true) {
-        setBackground(new Color(redColor.getRedColor(), greenColor.getGreenColor(), blueColor.getBlueColor()));
+        setBackground(new Color(redColor.getColor(), greenColor.getColor(), blueColor.getColor()));
         repaint();
-        tBlue.sleep(10);
+        tBlue.sleep(fps - 30);
       }
     } catch (Exception ex) {
       System.out.println(ex.toString());
