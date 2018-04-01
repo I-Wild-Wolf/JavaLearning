@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class AppVsBackground extends Applet implements Runnable {
   public static boolean isStoped = false;
-  public static int fps = 120;
+  public static int fps = 60;
   Thread app = new Thread(this);
 
   Thread input = new Thread(new UInput());

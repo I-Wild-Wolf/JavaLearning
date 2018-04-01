@@ -28,12 +28,13 @@ public class ColorBase implements Runnable {
                 step *= -1;
             }
             color = tempColor;
-            if (AppVsBackground.isStoped) {Thread.currentThread().interrupt();
-            try {
-                TimeUnit.MILLISECONDS.sleep(AppVsBackground.fps - modFps);
-            } catch (Exception ex) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(AppVsBackground.fps - modFps);
+                } catch (Exception ex) {
+                }
+            if (AppVsBackground.isStoped) {
+                Thread.currentThread().interrupt();
             }
         }
     }
-
 }
