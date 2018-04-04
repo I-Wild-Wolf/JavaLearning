@@ -9,7 +9,7 @@ public class UInput implements Runnable {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 if (reader.readLine().equalsIgnoreCase("stop")) {
-                    AppVsBackground.isStoped = true;
+                    AppVsBackground.isStopped = true;
                     Thread.currentThread().interrupt();
                 }
             }

@@ -19,6 +19,7 @@ public class ColorBase implements Runnable {
         byte step = 1;
         while (!Thread.currentThread().isInterrupted()) {
             int tempColor = color + step;
+
             if (tempColor > 255) {
                 tempColor = 255;
                 step *= -1;
@@ -32,7 +33,7 @@ public class ColorBase implements Runnable {
                     TimeUnit.MILLISECONDS.sleep(AppVsBackground.fps - modFps);
                 } catch (Exception ex) {
                 }
-            if (AppVsBackground.isStoped) {
+            if (AppVsBackground.isStopped) {
                 Thread.currentThread().interrupt();
             }
         }
